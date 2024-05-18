@@ -4,6 +4,7 @@ contain the BaseModel class
 """
 import uuid
 from datetime import datetime
+import models
 T_format = "%Y-%m-%dT%H:%M:%S.%f"
 
 
