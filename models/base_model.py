@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-
+"""
+contain the BaseModel class
+"""
 import uuid
 from datetime import datetime
 T_format = "%Y-%m-%dT%H:%M:%S.%f"
