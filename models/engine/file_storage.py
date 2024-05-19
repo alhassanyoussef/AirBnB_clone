@@ -1,29 +1,40 @@
+#!/usr/bin/env python3
+
+"""File storage"""
+
 import json
 from models.base_model import BaseModel
 
+
 class FileStorage:
-    """this will be serializes instances to a JSON file and deserializes JSON file to instances"""
-    __file_path = "file.jason"
+    """This class serializes instances to a JSON file
+    deserializes JSON file to instances."""
+
+    __file_path = "file.json"
     __objects = {}
-    class_dict = {"BaseModel": BaseModel,
-                  }
+    class_dict = {"BaseModel": BaseModel}
 
     def all(self):
+        """Returns the dictionary containing all stored objects."""
         return self.__objects
+
     def new(self, obj):
-        """ Adds the object to __objects with the key <obj class name>.id """
+        """Adds the object to __objects with the key <obj class name>.id"""
         key = f"{obj.__class__.__name__}.{obj.id}"
         self.__objects[key] = obj
+
     def save(self):
         """Serializes __objects to the JSON file."""
-        obj_dict = {}
-
+        serialized_objects = {}
         for key, obj in self.__objects.items():
-            obj_dict[key] = obj.to_dict()
+            serialized_objects[key] = obj.to_dict()
+
         with open(self.__file_path, 'w', encoding="UTF-8") as f:
-            json.dump(obj_dict, f)
+            json.dump(serialized_objects, f)
+
     def reload(self):
-        """method reads the JSON file and converts the JSON string back into Python objects."""
+        """Reads the JSON file and converts the
+        JSON string back into Python objects."""
         try:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
                 new_obj_dict = json.load(f)
@@ -32,7 +43,3 @@ class FileStorage:
                 self.__objects[key] = obj
         except FileNotFoundError:
             pass
-
-
-obj1 = BaseModel()
-print(obj1)

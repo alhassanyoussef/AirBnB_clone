@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-
+"""
+contain the BaseModel class
+"""
 import uuid
 from datetime import datetime
+from models import storage
 T_format = "%Y-%m-%dT%H:%M:%S.%f"
 
 
@@ -11,7 +14,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """The constructor."""
-        if kwargs:  # Initialize with kwargs
+        if kwargs:  # Isnitialize with kwargs
             for key, value in kwargs.items():
                 if key in ("created_at", "updated_at"):
                     # Convert string datetime to datetime objects
@@ -25,15 +28,18 @@ class BaseModel:
             now = datetime.utcnow()
             self.created_at = now
             self.updated_at = now
+            storage.new(self)
 
     def __str__(self):
         """Returns a string representation of the instance,
         including class name, id, and attributes."""
-        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
+                                         self.__dict__)
 
     def save(self):
         """Updates the attribute 'updated_at' with the current datetime."""
         self.updated_at = datetime.utcnow()
+        storage.save()
 
     def to_dict(self):
         """Returns a dictionary representation of the instance."""
