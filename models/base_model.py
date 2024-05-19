@@ -5,7 +5,6 @@ contain the BaseModel class
 import uuid
 from datetime import datetime
 import models
-T_format = "%Y-%m-%dT%H:%M:%S.%f"
 
 
 class BaseModel:
@@ -15,6 +14,7 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """The constructor."""
         if kwargs:  # Isnitialize with kwargs
+            T_format = "%Y-%m-%dT%H:%M:%S.%f"
             for key, value in kwargs.items():
                 if key in ("created_at", "updated_at"):
                     # Convert string datetime to datetime objects
