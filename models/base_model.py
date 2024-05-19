@@ -4,7 +4,7 @@ contain the BaseModel class
 """
 import uuid
 from datetime import datetime
-import models
+from models import storage
 T_format = "%Y-%m-%dT%H:%M:%S.%f"
 
 
@@ -14,7 +14,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """The constructor."""
-        if kwargs:  # Initialize with kwargs
+        if kwargs:  # Isnitialize with kwargs
             for key, value in kwargs.items():
                 if key in ("created_at", "updated_at"):
                     # Convert string datetime to datetime objects
@@ -28,6 +28,7 @@ class BaseModel:
             now = datetime.utcnow()
             self.created_at = now
             self.updated_at = now
+            storage.new(self)
 
     def __str__(self):
         """Returns a string representation of the instance,
@@ -38,6 +39,7 @@ class BaseModel:
     def save(self):
         """Updates the attribute 'updated_at' with the current datetime."""
         self.updated_at = datetime.utcnow()
+        storage.save()
 
     def to_dict(self):
         """Returns a dictionary representation of the instance."""
