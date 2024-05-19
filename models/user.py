@@ -3,7 +3,7 @@
 """Contains the User class."""
 
 from models.base_model import BaseModel
-
+import models
 
 class User(BaseModel):
     """Class that inherits from BaseModel."""
