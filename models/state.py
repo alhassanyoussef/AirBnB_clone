@@ -1,8 +1,16 @@
 #!/usr/bin/python3
-"""module for State"""
+"""
+Module for the State class.
+"""
 from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """class State"""
-    name: str = ""
+    """
+    State Class: Represents a state in the system.
+
+    Attributes:
+        name (str): The name of the state.
+    """
+
+    name = ""
